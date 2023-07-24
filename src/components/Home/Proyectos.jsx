@@ -69,9 +69,9 @@ const Proyectos = ({
         const select_other = document.getElementById(`select_${data[filter]}`);
         const select_other_ = select_other.value;
 
-        // if (select_other_ !== 'todos') {
-        //     type_ = 2;
-        // }
+        if (select_other_ !== 'todos') {
+            type_ = 2;
+        }
 
         if (value !== 'todos') {
             setData({
