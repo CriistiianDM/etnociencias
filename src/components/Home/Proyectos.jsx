@@ -25,9 +25,22 @@ const listProyectsAll = ({
 const filterSelect = ({
     dataProyect,
     filter,
-    value
+    value,
+    type,
+    otherSelect,
+    otherValue
 }) => {
-    const filterProyects = dataProyect.filter((proyecto) => proyecto[filter] === value);
+
+    let filterProyects = [];
+    if (type === 1) {
+        filterProyects = dataProyect.filter((proyecto) => proyecto[filter] === value);
+    }
+    else {
+        filterProyects = dataProyect.filter((proyecto) => {
+            return proyecto[filter] !== value && proyecto[otherSelect] === otherValue
+        });
+    }
+    console.log(filterProyects , 'filterProyects');
     return filterProyects;
 }
 
@@ -46,14 +59,29 @@ const Proyectos = ({
 
     const onChangeSelect = (e,filter) => {
         const value = e.target.value;
-      
-        console.log(value !== 'todos', value ,  'data');
+        let type_ = 1
+
+        const data = {
+            capacitador: 'municipio',
+            municipio: 'capacitador'
+        }
+
+        const select_other = document.getElementById(`select_${data[filter]}`);
+        const select_other_ = select_other.value;
+
+        // if (select_other_ !== 'todos') {
+        //     type_ = 2;
+        // }
+
         if (value !== 'todos') {
             setData({
                 proyectos: filterSelect({
                     dataProyect: proyectos_data,
                     filter: filter,
-                    value: value
+                    value: value,
+                    type: type_,
+                    otherSelect: data[filter],
+                    otherValue: select_other_
                 })
             });
         }
@@ -123,13 +151,15 @@ const Proyectos = ({
                 </Typography>
             }
             {
-            (typeSearch !== 1) && (
+            (
                 <section className='_conatainer_filtro'>
+                    {
+                    (typeSearch !== 1) &&
                     <div className='_container_select'>
                         <label>
                             Filtrar por Capacitador
                         </label>
-                        <select onChange={(e) => {onChangeSelect(e,'capacitador')}}>
+                        <select id='select_capacitador' onChange={(e) => {onChangeSelect(e,'capacitador')}}>
                             <option defaultChecked value="todos">todos</option>
                             {
                                 capacitadores.map((proyecto, index) => {
@@ -143,11 +173,12 @@ const Proyectos = ({
                             }
                         </select>
                     </div>
+                    }
                     <div className='_container_select'>
                         <label>
                             Filtrar por Municipio
                         </label>
-                        <select  onChange={(e) => {onChangeSelect(e,'municipio')}}>
+                        <select id='select_municipio' onChange={(e) => {onChangeSelect(e,'municipio')}}>
                             <option defaultChecked value="todos">todos</option>
                             {
                                 municipios.map((proyecto, index) => {
