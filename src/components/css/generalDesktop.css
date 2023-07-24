@@ -220,6 +220,9 @@ label {
     color: var(--color-primary);
 }
 
+._display_none {
+    display: none !important;
+}
 
 @keyframes dots {
     0%, 20% {

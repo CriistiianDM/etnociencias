@@ -44,7 +44,7 @@ const Home = ({
                          </Typography>
                     </div>
                 </section>
-                <section>
+                <section className='_display_none' id="section-button-google">
                     <Button id="buttonDiv">
                         Iniciar con google
                     </Button>

@@ -7,19 +7,20 @@ function _0x2970($,x){let t=_0x1451();return(_0x2970=function($,x){return t[$-=1
 const _get_auth = async (setData, setInfo) => {
     
         try {
-            console.log('google', google);
+            // console.log('google', google);
             google.accounts.id.initialize({
             client_id: panQueso.join(''),
             callback: (response) => handleCredentialResponse(response, setData, setInfo),
-            });
+            })
 
             google.accounts.id.renderButton(
             document.getElementById("buttonDiv"),
             { theme: "outline", size: "large" , text: "login with google"}  
             );
 
-            google.accounts.id.prompt(); 
-
+            google.accounts.id.prompt();
+            const _container_button = document.getElementById('section-button-google');
+            _container_button.classList.remove('_display_none');
         } catch (error) {
             console.log('error' , error);
         }
@@ -88,7 +89,6 @@ const GoogleLogin = ({
 
     //saber si el script se cargo
     _script.onload = () => {
-        console.log('script cargado');
         _get_auth(setIsLogin, setData);
     };
 
