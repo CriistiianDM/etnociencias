@@ -6,11 +6,15 @@ const Filter = ({
     municipios,
     onChangeSelect,
     typeSearch,
-    dataTotal
+    dataTotal,
+    dataProyect,
+    isSearch
 }) => {
 
     return (
         <>
+          {
+            (dataProyect?.proyectos?.length > 0 || isSearch !== undefined ) &&
             <main className='_container_filtros_logica'>
                 <section className='_conatainer_filtro'>
                     <div className='_container_total'>
@@ -71,6 +75,7 @@ const Filter = ({
                     </div>
                 </section>
             </main>
+          }
         </>
     )
 

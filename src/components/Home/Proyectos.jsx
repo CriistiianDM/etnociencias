@@ -172,6 +172,10 @@ const Proyectos = ({
         }
         else {
 
+            
+            //poner el otro select en todos
+            select_other.value = 'todos';
+
             allCountTotal({
                 __newProyects: proyectos_data,
                 dataMaestros: dataMaestros,
@@ -233,10 +237,12 @@ const Proyectos = ({
             onChangeSelect={onChangeSelect}
             typeSearch={typeSearch}
             dataTotal={dataTotal}
+            dataProyect={data}
+            isSearch={proyectos_data}
          />
        <main className='_container_proyectos'>
           <section className='_conatiner_proyectos_ol'>
-            { data.proyectos.length > 0 ?
+            { (data.proyectos.length > 0) ?
                
                 data.proyectos.map((proyecto, index) => (
                         <a className='_conatianer_a' key={index}>
