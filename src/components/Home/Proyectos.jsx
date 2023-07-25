@@ -1,6 +1,7 @@
 import React from 'react'
 import { Typography } from '@mui/material';
 import Filter from './Filter';
+import Modal from './Modal';
 
 const listProyectsAll = ({
     dataProyect,
@@ -119,6 +120,8 @@ const Proyectos = ({
     const [isSearch , setIsSearch] = React.useState(true);
     const [ typeSearch , setTypeSearch ] = React.useState(1);
     const [municipios, setMunicipios] = React.useState([]);
+    const [ activeModal , setActiveModal ] = React.useState(false);
+    const [ dataModal , setDataModal ] = React.useState({})
     const [capacitadores, setCapacitadores] = React.useState([]);
     const [data, setData] = React.useState({
         proyectos: []
@@ -190,6 +193,10 @@ const Proyectos = ({
 
     }
 
+    const onClickModal = (data) => {
+        setActiveModal(true);
+        setDataModal(data)
+    }
 
     React.useEffect(() => {
 
@@ -245,10 +252,12 @@ const Proyectos = ({
             { (data.proyectos.length > 0) ?
                
                 data.proyectos.map((proyecto, index) => (
-                        <a className='_conatianer_a' key={index}>
+                        <a onClick={() => {onClickModal(proyecto)}} className='_conatianer_a' key={index}>
                             <div className='_container_event'>
-                                <p>Id proyecto: {proyecto?.id_proyecto}</p>
-                                <p>Institución Educativa: {proyecto['nombre_de_la_institución_educativa']}</p>
+                                <p>{proyecto?.id_proyecto} -</p>
+                                <p>{proyecto?.municipio} -</p>
+                                <p>{proyecto?.nombre_del_proyecto} -</p>
+                                <p>{proyecto['nombre_de_la_institución_educativa']}</p>
                             </div>
                         </a>
                 ))              
@@ -264,6 +273,15 @@ const Proyectos = ({
             }
           </section>
        </main>
+       {
+              activeModal && 
+              <Modal 
+                  setActiveModal={setActiveModal}
+                  data_proyect={dataModal}
+                  dataMaestros={dataMaestros}
+                  dataAlumnos={dataAlumnos}
+              />
+       }
      </>
     )
 

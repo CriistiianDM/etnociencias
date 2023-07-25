@@ -173,7 +173,7 @@
 
 ._conatianer_a ._container_event {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     gap: 10px;
     width: calc(100% - 2em);
@@ -263,6 +263,114 @@ label {
     font-family: 'Inter', sans-serif;
     font-size: 15px;
     text-align: left;
+}
+
+._modal_content {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100vh;
+    z-index: 999;
+    overflow: hidden;
+}
+
+._close_modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    z-index: 9;
+}
+
+._container_modal_data {
+    position: relative;
+    left: -100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    padding: 2em;
+    width: calc(95% - 4em);
+    height: 100vh;
+    z-index: 10;
+    background: var(--color-white);
+    overflow: hidden;
+    animation: slide-in 0.5s cubic-bezier(0.42, 0, 0.58, 1) forwards;
+}
+
+._container_info_proyecto {
+    display: grid;
+    gap: 1em;
+    padding: 1em;
+    height: 20%;
+    width: calc(100% - 2em);
+    overflow: hidden;
+}
+
+._container_info_proyecto > div {
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    place-items: center;
+    gap: 10px;
+}
+
+._container_info_proyecto > div > h1.MuiTypography-root {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    gap: 5px;
+    place-content: center;
+    font-weight: 500;
+    font-family: 'Quicksand', sans-serif;
+    color: var(--color-text-semit-black);
+    overflow: hidden;
+    font-size: 1em;
+    text-align: center;
+}
+
+._container_info_proyecto > div > h1.MuiTypography-root span {
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: 700;
+    margin-right: 9px;
+}
+
+/* ._container_list_table {
+    max-height: 10em;
+    overflow: auto;
+} */
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  max-height: 15em;
+  overflow: auto;
+}
+
+th,
+td {
+  padding: 0.5em;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+
+@keyframes slide-in {
+    100% {
+      left: 2.5%;
+    }
 }
 
 @keyframes dots {
