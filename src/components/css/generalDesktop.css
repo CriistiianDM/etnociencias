@@ -67,7 +67,7 @@
     align-items: center;
     padding: 1em;
     width: calc(100% - 2em);
-    height: 4em;
+    height: 2.5em;
     box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.75);
 }
 
@@ -75,7 +75,7 @@
 ._container_header ._logo_etonociencias {
     display: grid;
     place-content: center;
-    width: 9em;
+    width: 8em;
     height: 100%;
 }
 
@@ -109,12 +109,12 @@
     font-weight: 700;
     color: var(--color-primary);
     overflow: hidden;
-    font-size: 18px;
+    font-size: 14px;
 }
 
 ._container_img_profile {
-    width: 4em;
-    height: 4em;
+    width: 3.5em;
+    height: 3.5em;
     border-radius: 100%;
     overflow: hidden;
 }
@@ -131,7 +131,7 @@
 
 .MuiTypography-root._loading_p {
     font-family: 'Quicksand', sans-serif;
-    font-size: 2em;
+    font-size: 1.8em;
 }
 
 .MuiTypography-root._loading_p:after {
@@ -143,7 +143,7 @@
     display: grid;
     place-content: center;
     gap: 1em;
-    padding: 2em;
+    padding: 1em;
     width: calc(100% - 4em);
     height: auto;
     min-height: 10em;
@@ -156,9 +156,8 @@
     place-items: center;
     gap: 7px;
     padding: 1em;
-    width: calc(80vw - 2em);
-    height: 64vh;
-    box-shadow: 0.5px 1px 4px 0px rgba(0, 0, 0, 0.75);
+    width: calc(95vw - 2em);
+    height: 70vh;
     border-radius: 4px;
     overflow: auto;
 }
@@ -192,6 +191,7 @@
     gap: 15px;
     top: 0;
     right: 0;
+    background-color: var(--color-white);
     width: -webkit-fill-available;
 }
 
@@ -222,6 +222,47 @@ label {
 
 ._display_none {
     display: none !important;
+}
+
+._container_filtros_logica {
+    position: relative;
+    padding: 0.5em;
+    width: calc(95vw - 1em);
+    z-index: 9;
+}
+
+._container_total {
+    display: flex;
+    width: 68%;
+    gap: 10px;
+}
+
+._container_total > div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+._container_total > div._teachers {
+    display: grid;
+    gap: 1px;
+}
+
+._container_total > div > div > span, 
+._container_total > div > span {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+    text-align: left;
+    color: var(--color-primary);
+    margin-right: 0.2em;
+}
+
+._container_total > div > div > strong, 
+._container_total > div > strong {
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    text-align: left;
 }
 
 @keyframes dots {

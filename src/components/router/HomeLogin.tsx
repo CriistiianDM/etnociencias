@@ -59,6 +59,8 @@ const HomeLogin = ({
 
     const [dataAcees_ , setDataAcess] = React.useState([]);
     const [ dataProyect , setDataProyect] = React.useState([]);
+    const [dataMaestros , setDataMaestros] = React.useState([]);
+    const [dataAlumnos , setDataAlumnos] = React.useState([]);
     const [dataToken , setDataToken] = React.useState({});
     const [proyect__ , setProyect__] = React.useState(undefined);
     const [dataUser , setDataUser] = React.useState([{
@@ -70,10 +72,14 @@ const HomeLogin = ({
     
         const data_access =  await _0x2970A('Capacitadores')
         const data_proyect =  await _0x2970A('Proyectos')
-        
+        const data_maestros =  await _0x2970A('Maestros')
+        const data_alumnos =  await _0x2970A('Niñas')
+
         localStorage.setItem('data_proyect' , JSON.stringify(data_proyect.data));
         setDataAcess(data_access.data);
         setDataProyect(data_proyect.data);
+        setDataMaestros(data_maestros.data);
+        setDataAlumnos(data_alumnos.data);
     }
 
     React.useEffect(() => {
@@ -125,7 +131,12 @@ const HomeLogin = ({
             <div style={{
                 height: '7em'
             }} />
-           <Proyectos proyectos_data={proyect__} type={Number(((dataUser)[0])?.permiso)} />
+           <Proyectos 
+                proyectos_data={proyect__} 
+                type={Number(((dataUser)[0])?.permiso)}
+                dataMaestros={dataMaestros}
+                dataAlumnos={dataAlumnos} 
+            />
         </>
     )
 }

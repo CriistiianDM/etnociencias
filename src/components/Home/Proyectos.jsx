@@ -1,5 +1,6 @@
-import { Typography } from '@mui/material';
 import React from 'react'
+import { Typography } from '@mui/material';
+import Filter from './Filter';
 
 const listProyectsAll = ({
     dataProyect,
@@ -22,6 +23,8 @@ const listProyectsAll = ({
     return uniqueProyectos;
 }
 
+//Estoy cansado y tengo que sacarlo para mañana!!!!
+//Que alguien me lance un salvavidas
 const filterSelect = ({
     dataProyect,
     filter,
@@ -37,16 +40,80 @@ const filterSelect = ({
     }
     else {
         filterProyects = dataProyect.filter((proyecto) => {
-            return proyecto[filter] !== value && proyecto[otherSelect] === otherValue
+            return proyecto[filter] === value && proyecto[otherSelect] === otherValue
         });
+       
     }
-    console.log(filterProyects , 'filterProyects');
+
     return filterProyects;
+
+}
+
+const abrasitoDeValennnn = ({
+    dataFiltrada,
+    dataMaestros,
+    dataAlumnos
+}) => {
+
+    let dataMaestro_ = [];
+    let dataAlumno_ = [];
+
+    dataFiltrada.map((proyecto) => {
+
+        //sacar los maestros y alumnos de cada proyecto
+        const dataMaestro = dataMaestros.filter((maestro) => maestro['proyecto'] === proyecto['id_proyecto']);
+        const dataAlumno = dataAlumnos.filter((alumno) => alumno['proyecto'] === proyecto['id_proyecto']);
+        
+        //concatenar las listas de maestros y alumnos
+        dataMaestro_ = dataMaestro_?.concat(dataMaestro);
+        dataAlumno_ = dataAlumno_?.concat(dataAlumno);
+    });
+
+ 
+    //sacar los maestros lideres y acompañantes de forma unica
+    return {
+        maestroLider: listProyectsAll({
+            dataProyect:dataMaestro_.filter((maestro) => maestro['tipo'] === 'LIDER'),
+            filter: 'identificación'
+        }),
+        maestroAc: listProyectsAll({
+            dataProyect:dataMaestro_.filter((maestro) => maestro['tipo'] !== 'LIDER'),
+            filter: 'identificación'
+        }),
+        ninas: listProyectsAll({
+            dataProyect: dataAlumno_,
+            filter: 'identificación'
+        }),
+    }
+
+}
+
+const allCountTotal = ({
+    __newProyects,
+    dataMaestros,
+    dataAlumnos,
+    setDataTotal
+}) => {
+
+    const total_ = abrasitoDeValennnn({
+        dataFiltrada: __newProyects,
+        dataMaestros: dataMaestros,
+        dataAlumnos: dataAlumnos
+    });
+
+    setDataTotal({
+        ninas: total_.ninas.length,
+        lideresP: total_.maestroLider.length,
+        acomP: total_.maestroAc.length,
+        proyectos: __newProyects.length
+    });
 }
 
 const Proyectos = ({
     proyectos_data,
-    type
+    type,
+    dataMaestros,
+    dataAlumnos
 }) => {
 
     const [isSearch , setIsSearch] = React.useState(true);
@@ -55,6 +122,13 @@ const Proyectos = ({
     const [capacitadores, setCapacitadores] = React.useState([]);
     const [data, setData] = React.useState({
         proyectos: []
+    });
+
+    const [ dataTotal , setDataTotal ] = React.useState({
+        ninas: 0,
+        lideresP: 0,
+        acomP: 0,
+        proyectos: 0
     });
 
     const onChangeSelect = (e,filter) => {
@@ -71,22 +145,40 @@ const Proyectos = ({
 
         if (select_other_ !== 'todos') {
             type_ = 2;
+            setIsSearch(false);
         }
 
         if (value !== 'todos') {
+
+            const __newProyects = filterSelect({
+                dataProyect: proyectos_data,
+                filter: filter,
+                value: value,
+                type: type_,
+                otherSelect: data[filter],
+                otherValue: select_other_
+            });
+
+            allCountTotal({
+                __newProyects: __newProyects,
+                dataMaestros: dataMaestros,
+                dataAlumnos: dataAlumnos,
+                setDataTotal: setDataTotal
+            });
+
             setData({
-                proyectos: filterSelect({
-                    dataProyect: proyectos_data,
-                    filter: filter,
-                    value: value,
-                    type: type_,
-                    otherSelect: data[filter],
-                    otherValue: select_other_
-                })
+                proyectos: __newProyects
             });
         }
         else {
-            console.log('todos', proyectos_data);
+
+            allCountTotal({
+                __newProyects: proyectos_data,
+                dataMaestros: dataMaestros,
+                dataAlumnos: dataAlumnos,
+                setDataTotal: setDataTotal
+            });
+           
             setData({
                 proyectos: proyectos_data
             });
@@ -98,6 +190,13 @@ const Proyectos = ({
     React.useEffect(() => {
 
         if (proyectos_data?.length > 0) {
+
+            allCountTotal({
+                __newProyects: proyectos_data,
+                dataMaestros: dataMaestros,
+                dataAlumnos: dataAlumnos,
+                setDataTotal: setDataTotal
+            });
 
             setData({
                 proyectos: proyectos_data
@@ -128,6 +227,13 @@ const Proyectos = ({
 
     return (
      <>
+       <Filter
+            capacitadores={capacitadores}
+            municipios={municipios}
+            onChangeSelect={onChangeSelect}
+            typeSearch={typeSearch}
+            dataTotal={dataTotal}
+         />
        <main className='_container_proyectos'>
           <section className='_conatiner_proyectos_ol'>
             { data.proyectos.length > 0 ?
@@ -149,48 +255,6 @@ const Proyectos = ({
                 <Typography className='_loading_p' variant='h1'>
                         No Tienes Proyectos Asignados
                 </Typography>
-            }
-            {
-            (
-                <section className='_conatainer_filtro'>
-                    {
-                    (typeSearch !== 1) &&
-                    <div className='_container_select'>
-                        <label>
-                            Filtrar por Capacitador
-                        </label>
-                        <select id='select_capacitador' onChange={(e) => {onChangeSelect(e,'capacitador')}}>
-                            <option defaultChecked value="todos">todos</option>
-                            {
-                                capacitadores.map((proyecto, index) => {
-                                    if (proyecto.capacitador !== undefined) {
-                                    return (<option key={index} 
-                                            value={proyecto.capacitador}
-                                            filter='capacitador'
-                                            >{proyecto.capacitador}</option>
-                                    )}
-                                })
-                            }
-                        </select>
-                    </div>
-                    }
-                    <div className='_container_select'>
-                        <label>
-                            Filtrar por Municipio
-                        </label>
-                        <select id='select_municipio' onChange={(e) => {onChangeSelect(e,'municipio')}}>
-                            <option defaultChecked value="todos">todos</option>
-                            {
-                                municipios.map((proyecto, index) => {
-                                    if (proyecto.municipio !== undefined) {
-                                        return (<option key={index} value={proyecto.municipio}>{proyecto.municipio}</option>
-                                    )}
-                                })
-                            }
-                        </select>
-                    </div>
-                </section>
-            )
             }
           </section>
        </main>
