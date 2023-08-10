@@ -23,7 +23,9 @@ const Modal = ({
     setActiveModal,
     data_proyect,
     dataMaestros,
-    dataAlumnos
+    dataAlumnos,
+    dataVisitas,
+    dataSeguimiento,
 }) => {
 
     const [data_, setData_] = React.useState({
@@ -46,6 +48,10 @@ const Modal = ({
 
     const onClickCloseModal = () => {
         setActiveModal(false);
+    }
+
+    const setDataDropdown = (_set, info) => {
+        _set(info)
     }
     
 

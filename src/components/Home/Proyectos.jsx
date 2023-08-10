@@ -114,7 +114,9 @@ const Proyectos = ({
     proyectos_data,
     type,
     dataMaestros,
-    dataAlumnos
+    dataAlumnos,
+    dataVisitas,
+    dataSegimiento
 }) => {
 
     const [isSearch , setIsSearch] = React.useState(true);
@@ -280,6 +282,8 @@ const Proyectos = ({
                   data_proyect={dataModal}
                   dataMaestros={dataMaestros}
                   dataAlumnos={dataAlumnos}
+                  dataVisitas={dataVisitas}
+                  dataSeguimiento={dataSegimiento}
               />
        }
      </>

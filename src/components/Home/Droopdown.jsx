@@ -35,10 +35,10 @@ const Dropdown = ({
                 <h1> {title_}</h1>
                 <a>+</a>
             </div>
-            { active && (<div date-ref="content">
+            { active && <div data-ref="content">
              {
                 data.map((item, index) => (
-                    <div key={index} className="_dropdown_item">
+                    <div key={index}>
                         <a>
                             <strong>{item.title}</strong>
                             <span>{item.dec}</span>
@@ -46,7 +46,7 @@ const Dropdown = ({
                     </div>
                 ))
              }
-            </div>)
+            </div>
           }
         </section>
     </>

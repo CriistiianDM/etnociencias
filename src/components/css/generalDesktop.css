@@ -407,11 +407,24 @@ th {
     background: #e6e6e6;
 }
 
-._dropdown > div[data-ref="content"] {
-    display: flex;
+._dropdown div[data-ref="content"] {
+    display: grid;
     width: calc(100% - 2em);
-    padding: 0.5em 1em;
+    padding: 0 1em;
     height: 2em;
+    overflow: hidden;
+}
+
+._dropdown div[data-ref="content"] > div {
+    display: flex;
+    gap: 5px;
+}
+
+._dropdown div[data-ref="content"] > div > a {
+    display: flex;
+    gap: 5px;
+    width: 20%;
+    overflow: hidden;
 }
 
 @keyframes slide-in {
