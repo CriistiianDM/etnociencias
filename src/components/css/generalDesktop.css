@@ -299,7 +299,7 @@ label {
     height: 100vh;
     z-index: 10;
     background: var(--color-white);
-    overflow: hidden;
+    overflow: auto;
     animation: slide-in 0.5s cubic-bezier(0.42, 0, 0.58, 1) forwards;
 }
 
@@ -307,15 +307,15 @@ label {
     display: grid;
     gap: 1em;
     padding: 1em;
-    height: 20%;
+    min-height: 20%;
     width: calc(100% - 2em);
-    overflow: hidden;
 }
 
 ._container_info_proyecto > div {
     display: grid;
     grid-template-columns: 33% 33% 33%;
-    place-items: center;
+    justify-content: left;
+    align-items: center;
     gap: 10px;
 }
 
@@ -325,27 +325,25 @@ label {
     -webkit-line-clamp: 2;
     overflow: hidden;
     text-overflow: ellipsis;
-    gap: 5px;
-    place-content: center;
     font-weight: 500;
     font-family: 'Quicksand', sans-serif;
     color: var(--color-text-semit-black);
     overflow: hidden;
     font-size: 1em;
-    text-align: center;
+    text-align: left;
 }
 
 ._container_info_proyecto > div > h1.MuiTypography-root span {
-    text-align: center;
+    text-align: left;
     font-size: 1.2em;
     font-weight: 700;
     margin-right: 9px;
+    text-transform: capitalize;
 }
 
-/* ._container_list_table {
-    max-height: 10em;
-    overflow: auto;
-} */
+._container_list_table:last-child {
+    margin-bottom: 4em;
+}
 
 table {
   border-collapse: collapse;
@@ -359,13 +357,62 @@ td {
   padding: 0.5em;
   text-align: left;
   border: 1px solid #ddd;
+  font-weight: 500;
+  font-family: 'Quicksand', sans-serif;
 }
 
 th {
-  background-color: #f2f2f2;
+  background-color: var(--color-bg-table);
   font-weight: bold;
+  font-family: 'Quicksand', sans-serif;
 }
 
+._dropdown {
+    display: grid;
+    align-items: center;
+    gap: 8px;
+    height: auto;
+    width: 100%;
+    border: var(--color-separate-line) 1px solid;
+}
+
+._dropdown > div[data-ref="title"] {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 2em;
+    width: calc(100% - 2em);
+    padding: 0.2em 1em;
+    background: var(--color-bg-table);
+    cursor: pointer;
+}
+
+._dropdown > div[data-ref="title"] a,
+._dropdown > div[data-ref="title"] h1 {
+    width: min-content;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 700;
+    font-size: 1.2em;
+    color: var(--color-text-semit-black);
+    margin: unset;
+}
+
+._dropdown > div[data-ref="title"] a:hover {
+    transition: all 0.3s ease-in-out;
+    transform: scale3d(1.1, 1.1, 1.1);
+}
+
+._dropdown > div[data-ref="title"]:hover {
+    transition: all 0.3s ease-in-out;
+    background: #e6e6e6;
+}
+
+._dropdown > div[data-ref="content"] {
+    display: flex;
+    width: calc(100% - 2em);
+    padding: 0.5em 1em;
+    height: 2em;
+}
 
 @keyframes slide-in {
     100% {

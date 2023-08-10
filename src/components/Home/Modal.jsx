@@ -1,7 +1,7 @@
 import React from "react";
 import { Typography } from "@mui/material";
 import Table from "./Table";
-
+import Dropdown from "./Droopdown";
 
 const filter_ = ({
     array1,
@@ -113,6 +113,12 @@ const Modal = ({
                                 {data_['municipio']}
                             </Typography>
                         </div>
+                    </div>
+                    <div>
+                        <Dropdown title={"Visitas"}/>
+                    </div>
+                    <div>
+                        <Dropdown title={"Seguimiento"}/>
                     </div>
                     <div className="_container_list_table">
                         <Table 
