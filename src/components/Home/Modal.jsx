@@ -3,20 +3,12 @@ import { Typography } from "@mui/material";
 import Table from "./Table";
 import Dropdown from "./Droopdown";
 
-const filter_ = ({
-    array1,
-    filter1,
-    array2,
-    filter2
-}) => {
-
-    const data_filter = array1.filter((maestro) => {
-        return maestro[filter1] === array2[filter2]
-    })
-
-    return data_filter
-
-}
+import { filter_, 
+        verificateArray, 
+        setDataState,
+        setDataWithFilter,
+        verificateObject
+} from "../../utils/_";
 
 //Modal Informacion All
 const Modal = ({
@@ -45,51 +37,59 @@ const Modal = ({
     });
     const [dataMaestros_, setDataMaestros_] = React.useState([]);
     const [dataAlumnos_, setDataAlumnos_] = React.useState([]);
+    const [dataVisitas_, setDataVisitas_] = React.useState([]);
+    const [dataSeguimiento_, setDataSeguimiento_] = React.useState([]);
 
     const onClickCloseModal = () => {
         setActiveModal(false);
     }
 
-    const setDataDropdown = (_set, info) => {
-        _set(info)
-    }
-    
-
     React.useEffect(()=> {
 
-        if(data_proyect && data_proyect !== undefined) {
-            console.log(data_proyect, 'aaa')
+        if(verificateObject(data_proyect)) {
             setData_(data_proyect)
         }
 
     },[data_proyect])
 
-    React.useEffect(()=> {
 
-        if (dataMaestros && dataMaestros !== undefined) {
-            
-            setDataMaestros_(filter_({
-                array1: dataMaestros,
-                filter1: 'proyecto',
-                array2: data_proyect,
-                filter2: 'id_proyecto'
-            }))
+    React.useEffect( ()=> {
+     
+        const array_ = [{
+            sourceArray: dataVisitas,
+            setDataFunc: setDataVisitas_,
+        },
+        {
+            sourceArray: dataSeguimiento,
+            setDataFunc: setDataSeguimiento_,
+        },
+        {
+            sourceArray: dataMaestros,
+            setDataFunc: setDataMaestros_,
+        },
+        {
+            sourceArray: dataAlumnos,
+            setDataFunc: setDataAlumnos_,
+        }]
 
-            setDataAlumnos_(filter_({
-                array1: dataAlumnos,
-                filter1: 'proyecto',
-                array2: data_proyect,
-                filter2: 'id_proyecto'
-            }))
-        }
+        array_.map((item) => {
+            setDataWithFilter({
+                sourceArray: item.sourceArray,
+                filterField: 'proyecto',
+                targetArray: data_proyect,
+                targetFilterField: 'id_proyecto',
+                setDataFunc: item.setDataFunc
+            })
+        })
 
-    },[dataMaestros])
+    },[dataVisitas, dataSeguimiento, dataMaestros, dataAlumnos])
 
     return (
         <>
             <main className="_modal_content">
                 <a onClick={onClickCloseModal} className="_close_modal"/>
                 <section className="_container_modal_data">
+                    <a onClick={onClickCloseModal} className="_close_modal_x">x</a>
                     <div className="_container_info_proyecto">
                         <div>
                             <Typography variant="h1">
@@ -121,10 +121,10 @@ const Modal = ({
                         </div>
                     </div>
                     <div>
-                        <Dropdown title={"Visitas"}/>
+                        <Dropdown title={"Visitas"} callback={ (e) => { e(dataVisitas_)} }/>
                     </div>
                     <div>
-                        <Dropdown title={"Seguimiento"}/>
+                        <Dropdown title={"Seguimiento"} callback={ (e) => {e(dataSeguimiento_)} } />
                     </div>
                     <div className="_container_list_table">
                         <Table 

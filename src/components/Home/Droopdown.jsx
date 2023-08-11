@@ -23,9 +23,14 @@ const Dropdown = ({
   }, [title]);
 
   React.useEffect(() => {
-    if (callback)
-    callback(setData);
+    if (callback) {
+      callback(setData);
+    }
   }, [callback]);
+
+  React.useEffect(() => {
+    console.log(data)
+  }, [data]);
 
   //component
   return (
@@ -39,10 +44,13 @@ const Dropdown = ({
              {
                 data.map((item, index) => (
                     <div key={index}>
-                        <a>
-                            <strong>{item.title}</strong>
-                            <span>{item.dec}</span>
-                        </a>
+                      {
+                        Object.entries(item).map(([key, value], index) => 
+                        (<a key={index}>
+                            <strong>{key}:</strong>
+                            <span>{value}</span>
+                        </a>))
+                      }
                     </div>
                 ))
              }

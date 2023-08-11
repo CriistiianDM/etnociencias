@@ -411,20 +411,59 @@ th {
     display: grid;
     width: calc(100% - 2em);
     padding: 0 1em;
-    height: 2em;
+    height: auto;
+    min-height: 2em;
     overflow: hidden;
 }
 
 ._dropdown div[data-ref="content"] > div {
     display: flex;
     gap: 5px;
+    height: 3em;
+    overflow: hidden;
 }
 
 ._dropdown div[data-ref="content"] > div > a {
     display: flex;
-    gap: 5px;
+    align-items: center;
+    gap: 8px;
     width: 20%;
     overflow: hidden;
+}
+
+._dropdown div[data-ref="content"] > div > a > span, 
+._dropdown div[data-ref="content"] > div > a > strong {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 400;
+    font-size: 13px;
+    color: var(--color-text-semit-black);
+    margin: unset;
+}
+
+
+._dropdown div[data-ref="content"] > div > a > span {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1;
+}
+
+._dropdown div[data-ref="content"] > div > a > strong {
+    font-weight: 700;
+    font-size: 15px;
+}
+
+._close_modal_x {
+    position: absolute;
+    top: 7px;
+    right: 7px;
+    color: #000;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 400;
+    font-size: 1.5em;
+    cursor: pointer;
 }
 
 @keyframes slide-in {
